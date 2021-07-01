@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AutorController extends AbstractController
 {
-    #[Route('/autor', name: 'autor_index')]
+    /** 
+     * @Route("/autor", name="autor_index")
+     */ 
     public function index(AutorRepository $autorRepository): Response
     {
         return $this->render('autor/index.html.twig', [
@@ -20,7 +22,9 @@ class AutorController extends AbstractController
         ]);
     }
 
-    #[Route('/autor/new', name: 'autor_new', methods: ['GET', 'POST'])]
+    /** 
+     * @Route("/autor/new", name="autor_new", methods={"GET","POST"})
+     */ 
     public function new(Request $request): Response
     {
         $autor = new Autor();
@@ -41,7 +45,9 @@ class AutorController extends AbstractController
         ]);
     }
 
-    #[Route('/autor/{id}', name: 'autor_show', methods: ['GET'])]
+    /** 
+     * @Route("/autor/{id}", name="autor_show", methods={"GET"})
+     */ 
     public function show(Autor $autor): Response
     {
         return $this->render('autor/show.html.twig', [
@@ -49,7 +55,9 @@ class AutorController extends AbstractController
         ]);
     }
 
-    #[Route('/autor/{id}/edit', name: 'autor_edit', methods: ['GET', 'POST'])]
+    /** 
+     * @Route("/autor/{id}/edit", name="autor_edit", methods={"GET", "POST"})
+     */
     public function edit(Request $request, Autor $autor): Response
     {
         $form = $this->createForm(AutorType::class, $autor);
@@ -67,7 +75,9 @@ class AutorController extends AbstractController
         ]);
     }
 
-    #[Route('/autor/{id}', name: 'autor_delete', methods: ['POST'])]
+    /** 
+     * @Route("/autor/{id}", name="autor_delete", methods={"POST"})
+     */ 
     public function delete(Request $request, Autor $autor): Response
     {
         if ($this->isCsrfTokenValid('delete'.$autor->getId(), $request->request->get('_token'))) {

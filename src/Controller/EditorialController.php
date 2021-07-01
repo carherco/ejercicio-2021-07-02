@@ -10,10 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/editorial')]
+/**
+ * @Route("/editorial")
+ */ 
 class EditorialController extends AbstractController
 {
-    #[Route('/', name: 'editorial_index', methods: ['GET'])]
+    /**
+     * @Route("/", name="editorial_index", methods={"GET"})
+     */ 
     public function index(EditorialRepository $editorialRepository): Response
     {
         return $this->render('editorial/index.html.twig', [
@@ -21,7 +25,9 @@ class EditorialController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'editorial_new', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/new", name="editorial_new", methods={"GET", "POST"})
+     */ 
     public function new(Request $request): Response
     {
         $editorial = new Editorial();
@@ -42,7 +48,9 @@ class EditorialController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'editorial_show', methods: ['GET'])]
+    /**
+     * @Route("/{id}", name="editorial_show", methods={"GET"})
+     */ 
     public function show(Editorial $editorial): Response
     {
         return $this->render('editorial/show.html.twig', [
@@ -50,7 +58,9 @@ class EditorialController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'editorial_edit', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/{id}/edit", name="editorial_edit", methods={"GET", "POST"})
+     */ 
     public function edit(Request $request, Editorial $editorial): Response
     {
         $form = $this->createForm(EditorialType::class, $editorial);
@@ -68,7 +78,9 @@ class EditorialController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'editorial_delete', methods: ['POST'])]
+    /**
+     * @Route("/{id}", name="editorial_delete", methods={"POST"})
+     */ 
     public function delete(Request $request, Editorial $editorial): Response
     {
         if ($this->isCsrfTokenValid('delete'.$editorial->getId(), $request->request->get('_token'))) {

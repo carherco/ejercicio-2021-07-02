@@ -12,10 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/fondo')]
+/** 
+ * @Route("/fondo")
+ */
 class FondoController extends AbstractController
 {
-    #[Route('/', name: 'fondo_index', methods: ['GET'])]
+    /** 
+     * @Route("/", name="fondo_index", methods={"GET"})
+     */
     public function index(FondoRepository $fondoRepository): Response
     {
         return $this->render('fondo/index.html.twig', [
@@ -23,7 +27,9 @@ class FondoController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'fondo_new', methods: ['GET', 'POST'])]
+    /** 
+     * @Route("/new", name="fondo_new", methods={"GET", "POST"})
+     */
     public function new( 
         EditorialRepository $editorialRepository,
         AutorRepository $autorRepository,
@@ -35,7 +41,9 @@ class FondoController extends AbstractController
         ]);
     }
 
-    #[Route('/insert', name: 'fondo_insert')]
+    /** 
+     * @Route("/insert", name="fondo_insert")
+     */
     public function insert(
         Request $request, 
         EditorialRepository $editorialRepository,
@@ -67,7 +75,9 @@ class FondoController extends AbstractController
         
     }
 
-    #[Route('/{id}', name: 'fondo_show', methods: ['GET'])]
+    /** 
+     * @Route("/{id}", name="fondo_show", methods={"GET"})
+     */ 
     public function show(Fondo $fondo): Response
     {
         return $this->render('fondo/show.html.twig', [
@@ -75,7 +85,9 @@ class FondoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'fondo_edit', methods: ['GET', 'POST'])]
+    /** 
+     * @Route("/{id}/edit", name="fondo_edit", methods={"GET", "POST"})
+     */ 
     public function edit(
         $id,
         FondoRepository $fondoRepository, 
@@ -92,7 +104,9 @@ class FondoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'fondo_update')]
+    /** 
+     * @Route("/{id}/update", name="fondo_update")
+     */ 
     public function update(
         $id,
         Request $request, 
@@ -129,7 +143,9 @@ class FondoController extends AbstractController
         ]);
     }
 
-    #[Route('delete/{id}', name: 'fondo_delete')]
+    /** 
+     * @Route("delete/{id}", name="fondo_delete")
+     */ 
     public function delete(
         $id,
         FondoRepository $fondoRepository, 
