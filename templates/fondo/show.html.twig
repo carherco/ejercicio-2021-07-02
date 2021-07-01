@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fondo{% endblock %}
+
+{% block body %}
+    <h1>Fondo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fondo.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ fondo.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Isbn</th>
+                <td>{{ fondo.isbn }}</td>
+            </tr>
+            <tr>
+                <th>Edicion</th>
+                <td>{{ fondo.edicion }}</td>
+            </tr>
+            <tr>
+                <th>Publicacion</th>
+                <td>{{ fondo.publicacion }}</td>
+            </tr>
+            <tr>
+                <th>Categoria</th>
+                <td>{{ fondo.categoria }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('fondo_index') }}">back to list</a>
+
+    <a href="{{ path('fondo_edit', {'id': fondo.id}) }}">edit</a>
+
+    <a href="{{ path('fondo_delete', {'id': fondo.id}) }}">Delete</a>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista Catálogo{% endblock %}
+
+{% block body %}
+
+  <h1>Lista de libros</h1>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th></th>
+          </tr>
+        </thead>
+          
+        <tbody>
+          {% for fondo in fondos %}
+          <tr> 
+            <td>{{ fondo.id }}</td>
+            <td>{{ fondo.titulo }}</td>
+            <td>
+            {{fondo.autores[0].nombre}} 
+
+            {% if fondo.autores|length > 1 %}
+              <p>{{fondo.autores[1].nombre}}</p> 
+            {% endif %}
+            </td>
+            
+            <td>{{fondo.editorial.nombre}}</td>
+
+            <td><a class="nav-link" href="{{ path('catalogo_ver', {id: fondo.id}) }}">Ver ficha completa</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock %}

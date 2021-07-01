@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Fondo{% endblock %}
+
+{% block body %}
+    <h1>Edit Fondo</h1>
+
+    <form name="fondo" method="post" action="{{path('fondo_update', {id: fondo.id})}}">
+        <div id="fondo">
+            <div>
+                <label for="fondo_titulo" class="required">Titulo</label>
+                <input type="text" id="fondo_titulo" name="fondo[titulo]" required="required" maxlength="255" value="{{fondo.titulo}}" />
+            </div>
+            <div>
+                <label for="fondo_isbn" class="required">Isbn</label>
+                <input type="text" id="fondo_isbn" name="fondo[isbn]" required="required" maxlength="17" value="{{fondo.isbn}}" />
+            </div>
+            <div><label for="fondo_edicion">Edicion</label><input type="number" id="fondo_edicion" name="fondo[edicion]" value="{{fondo.edicion}}" /></div>
+            <div><label for="fondo_publicacion">Publicacion</label><input type="number" id="fondo_publicacion" name="fondo[publicacion]" value="{{fondo.publicacion}}" /></div>
+            <div><label for="fondo_categoria" class="required">Categoria</label><input type="text" id="fondo_categoria" name="fondo[categoria]" required="required" maxlength="50" value="{{fondo.categoria}}" /></div>
+            <div>
+                <label for="fondo_autores">Autores</label>
+                <select id="fondo_autores" name="fondo[autoresIds][]" multiple="multiple">
+                    {% for autor in autores %} 
+                    <option value="{{ autor.id }}" {% if autor in fondo.autores %}selected{% endif %}>{{ autor.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="fondo_editorial" class="required">Editorial</label>
+                <select id="fondo_editorial" name="fondo[editorialId]">
+                    {% for editorial in editoriales %} 
+                    <option value="{{ editorial.id }}" {% if editorial == fondo.editorial %}selected{% endif %}>{{ editorial.nombre }}</option>
+                    {% endfor %} 
+                </select>
+            </div>
+        </div>
+        <button class="btn">Update</button>
+    </form>
+
+    <a href="{{ path('fondo_index') }}">Back to List</a>
+
+    <a href="{{ path('fondo_delete', {'id': fondo.id}) }}">Delete</a>
+{% endblock %}
