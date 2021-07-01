@@ -32,7 +32,7 @@ class FondoController extends AbstractController
      */
     public function new( 
         EditorialRepository $editorialRepository,
-        AutorRepository $autorRepository,
+        AutorRepository $autorRepository
         ): Response
     {
         return $this->render('fondo/new.html.twig', [
