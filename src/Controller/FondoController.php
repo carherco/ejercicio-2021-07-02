@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FondoController extends AbstractController
 {
     /** 
-     * @Route("/", name="fondo_index", methods={"GET"})
+     * @Route("/", name="fondo_index")
      */
     public function index(FondoRepository $fondoRepository): Response
     {
@@ -28,7 +28,7 @@ class FondoController extends AbstractController
     }
 
     /** 
-     * @Route("/new", name="fondo_new", methods={"GET", "POST"})
+     * @Route("/new", name="fondo_new")
      */
     public function new( 
         EditorialRepository $editorialRepository,
@@ -76,7 +76,7 @@ class FondoController extends AbstractController
     }
 
     /** 
-     * @Route("/{id}", name="fondo_show", methods={"GET"})
+     * @Route("/{id}", name="fondo_show")
      */ 
     public function show(Fondo $fondo): Response
     {
@@ -86,7 +86,7 @@ class FondoController extends AbstractController
     }
 
     /** 
-     * @Route("/{id}/edit", name="fondo_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="fondo_edit")
      */ 
     public function edit(
         $id,

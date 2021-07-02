@@ -5,7 +5,19 @@
 {% block body %}
     <h1>Create new Autor</h1>
 
-    {{ include('autor/_form.html.twig') }}
+    <form name="autor" method="post" action="{{path('autor_insert')}}">
+
+        <div>
+            <label for="autor_nombre" class="required">Nombre</label>
+            <input type="text" id="autor_nombre" name="nombre" required="required" maxlength="255">
+        </div>
+        <div>
+            <label for="autor_tipo" class="required">Tipo</label>
+            <input type="text" id="autor_tipo" name="tipo" required="required" maxlength="10">
+        </div>
+        
+        <button class="btn">Save</button>
+    </form>
 
     <a href="{{ path('autor_index') }}">back to list</a>
 {% endblock %}

@@ -5,9 +5,21 @@
 {% block body %}
     <h1>Edit Autor</h1>
 
-    {{ include('autor/_form.html.twig', {'button_label': 'Update'}) }}
+    <form name="autor" method="post" action="{{path('autor_update', {id: autor.id})}}">
+
+        <div>
+            <label for="autor_nombre" class="required">Nombre</label>
+            <input type="text" id="autor_nombre" name="nombre" value="{{autor.nombre}}" required="required" maxlength="255">
+        </div>
+        <div>
+            <label for="autor_tipo" class="required">Tipo</label>
+            <input type="text" id="autor_tipo" name="tipo" value="{{autor.tipo}}" required="required" maxlength="10">
+        </div>
+        
+        <button class="btn">Save</button>
+    </form>
 
     <a href="{{ path('autor_index') }}">back to list</a>
 
-    {{ include('autor/_delete_form.html.twig') }}
+    <a href="{{ path('autor_delete', {id: autor.id}) }}">Delete</a>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Autor;
 use App\Form\AutorType;
 use App\Repository\AutorRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,26 +24,30 @@ class AutorController extends AbstractController
     }
 
     /** 
-     * @Route("/autor/new", name="autor_new", methods={"GET","POST"})
+     * @Route("/autor/new", name="autor_new")
      */ 
-    public function new(Request $request): Response
+    public function new(): Response
     {
+        return $this->render('autor/new.html.twig');
+    }
+
+    /** 
+     * @Route("/autor/insert", name="autor_insert")
+     */ 
+    public function insert(Request $request, EntityManagerInterface $em): Response
+    {
+        $nombre = $request->request->get('nombre');
+        $tipo = $request->request->get('tipo');
+        
         $autor = new Autor();
-        $form = $this->createForm(AutorType::class, $autor);
-        $form->handleRequest($request);
+        $autor->setNombre($nombre);
+        $autor->setTipo($tipo);
+            
+        $em->persist($autor);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($autor);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('autor_index');
-        }
-
-        return $this->render('autor/new.html.twig', [
-            'autor' => $autor,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('autor_index');
+        
     }
 
     /** 
@@ -58,34 +63,45 @@ class AutorController extends AbstractController
     /** 
      * @Route("/autor/{id}/edit", name="autor_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Autor $autor): Response
+    public function edit(
+        $id,
+        AutorRepository $autorRepository, ): Response
     {
-        $form = $this->createForm(AutorType::class, $autor);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('autor_index');
-        }
+        $autor = $autorRepository->find($id);
 
         return $this->render('autor/edit.html.twig', [
-            'autor' => $autor,
-            'form' => $form->createView(),
+            'autor' => $autor
         ]);
     }
 
     /** 
-     * @Route("/autor/{id}", name="autor_delete", methods={"POST"})
+     * @Route("/autor/{id}/update", name="autor_update")
      */ 
-    public function delete(Request $request, Autor $autor): Response
+    public function update($id, Request $request, EntityManagerInterface $em, AutorRepository $autorRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$autor->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($autor);
-            $entityManager->flush();
-        }
+        $nombre = $request->request->get('nombre');
+        $tipo = $request->request->get('tipo');
+        
+        $autor = $autorRepository->find($id);
+        $autor->setNombre($nombre);
+        $autor->setTipo($tipo);
+            
+        $em->persist($autor);
+        $em->flush();
 
+        return $this->redirectToRoute('autor_index');
+        
+    }
+
+    /** 
+     * @Route("/autor/{id}/delete", name="autor_delete")
+     */ 
+    public function delete($id, EntityManagerInterface $em, AutorRepository $autorRepository): Response
+    {
+        $autor = $autorRepository->find($id);
+        $em->remove($autor);
+        $em->flush();
+        
         return $this->redirectToRoute('autor_index');
     }
 }
