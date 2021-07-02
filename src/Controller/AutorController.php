@@ -53,8 +53,9 @@ class AutorController extends AbstractController
     /** 
      * @Route("/autor/{id}", name="autor_show", methods={"GET"})
      */ 
-    public function show(Autor $autor): Response
+    public function show($id, AutorRepository $autorRepository): Response
     {
+        $autor = $autorRepository->find($id);
         return $this->render('autor/show.html.twig', [
             'autor' => $autor,
         ]);
@@ -65,7 +66,7 @@ class AutorController extends AbstractController
      */
     public function edit(
         $id,
-        AutorRepository $autorRepository, ): Response
+        AutorRepository $autorRepository): Response
     {
         $autor = $autorRepository->find($id);
 

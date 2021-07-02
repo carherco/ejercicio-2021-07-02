@@ -5,9 +5,15 @@
 {% block body %}
     <h1>Edit Editorial</h1>
 
-    {{ include('editorial/_form.html.twig', {'button_label': 'Update'}) }}
+    <form name="editorial" method="post" action="{{path('editorial_update', {id: editorial.id})}}">
+        <div>
+            <label for="editorial_nombre" class="required">Nombre</label>
+            <input type="text" id="editorial_nombre" name="nombre" required="required" maxlength="255" value="{{editorial.nombre}}" />
+        </div>
+        <button class="btn">Update</button>
+    </form>
 
     <a href="{{ path('editorial_index') }}">back to list</a>
 
-    {{ include('editorial/_delete_form.html.twig') }}
+    <a href="{{ path('editorial_delete', {'id': editorial.id}) }}">Delete</a>
 {% endblock %}

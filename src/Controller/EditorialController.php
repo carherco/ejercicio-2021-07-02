@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Editorial;
 use App\Form\EditorialType;
 use App\Repository\EditorialRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,43 +17,45 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditorialController extends AbstractController
 {
     /**
-     * @Route("/", name="editorial_index", methods={"GET"})
+     * @Route("/", name="editorial_index")
      */ 
     public function index(EditorialRepository $editorialRepository): Response
     {
         return $this->render('editorial/index.html.twig', [
-            'editorials' => $editorialRepository->findAll(),
+            'editoriales' => $editorialRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="editorial_new", methods={"GET", "POST"})
+     * @Route("/new", name="editorial_new")
      */ 
-    public function new(Request $request): Response
+    public function new(): Response
     {
+        return $this->render('editorial/new.html.twig');
+    }
+
+    /**
+     * @Route("/insert", name="editorial_insert")
+     */ 
+    public function insert(Request $request, EntityManagerInterface $em): Response
+    {
+        $nombre = $request->request->get('nombre');
+            
         $editorial = new Editorial();
-        $form = $this->createForm(EditorialType::class, $editorial);
-        $form->handleRequest($request);
+        $editorial->setNombre($nombre);
+            
+        $em->persist($editorial);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($editorial);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('editorial_index');
-        }
-
-        return $this->render('editorial/new.html.twig', [
-            'editorial' => $editorial,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('editorial_index');
     }
 
     /**
      * @Route("/{id}", name="editorial_show", methods={"GET"})
      */ 
-    public function show(Editorial $editorial): Response
+    public function show($id, EditorialRepository $editorialRepository): Response
     {
+        $editorial = $editorialRepository->find($id);
         return $this->render('editorial/show.html.twig', [
             'editorial' => $editorial,
         ]);
@@ -61,33 +64,38 @@ class EditorialController extends AbstractController
     /**
      * @Route("/{id}/edit", name="editorial_edit", methods={"GET", "POST"})
      */ 
-    public function edit(Request $request, Editorial $editorial): Response
+    public function edit($id, EditorialRepository $editorialRepository): Response
     {
-        $form = $this->createForm(EditorialType::class, $editorial);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('editorial_index');
-        }
-
+        $editorial = $editorialRepository->find($id);
         return $this->render('editorial/edit.html.twig', [
             'editorial' => $editorial,
-            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="editorial_delete", methods={"POST"})
+     * @Route("/editorial/{id}/update", name="editorial_update")
      */ 
-    public function delete(Request $request, Editorial $editorial): Response
+    public function update($id, EditorialRepository $editorialRepository, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$editorial->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($editorial);
-            $entityManager->flush();
-        }
+        $nombre = $request->request->get('nombre');
+            
+        $editorial = $editorialRepository->find($id);
+        $editorial->setNombre($nombre);
+            
+        $em->persist($editorial);
+        $em->flush();
+
+        return $this->redirectToRoute('editorial_index');
+    }
+
+    /**
+     * @Route("/editorial/{id}/delete", name="editorial_delete")
+     */ 
+    public function delete($id, EditorialRepository $editorialRepository, EntityManagerInterface $em): Response
+    {
+        $editorial = $editorialRepository->find($id);
+        $em->remove($editorial);
+        $em->flush();
 
         return $this->redirectToRoute('editorial_index');
     }

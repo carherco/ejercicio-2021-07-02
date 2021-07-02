@@ -5,7 +5,13 @@
 {% block body %}
     <h1>Create new Editorial</h1>
 
-    {{ include('editorial/_form.html.twig') }}
+    <form name="editorial" method="post" action="{{path('editorial_insert')}}">
+        <div>
+            <label for="editorial_nombre" class="required">Nombre</label>
+            <input type="text" id="editorial_nombre" name="nombre" required="required" maxlength="255" />
+        </div>
+        <button class="btn">Update</button>
+    </form>
 
     <a href="{{ path('editorial_index') }}">back to list</a>
 {% endblock %}

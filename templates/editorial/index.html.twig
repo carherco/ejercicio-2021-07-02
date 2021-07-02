@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editorial index{% endblock %}
+{% block title %}Editoriales{% endblock %}
 
 {% block body %}
-    <h1>Editorial index</h1>
+    <h1>Listado de editoriales</h1>
 
     <table class="table">
         <thead>
@@ -14,13 +14,14 @@
             </tr>
         </thead>
         <tbody>
-        {% for editorial in editorials %}
+        {% for editorial in editoriales %}
             <tr>
                 <td>{{ editorial.id }}</td>
                 <td>{{ editorial.nombre }}</td>
                 <td>
                     <a href="{{ path('editorial_show', {'id': editorial.id}) }}">show</a>
                     <a href="{{ path('editorial_edit', {'id': editorial.id}) }}">edit</a>
+                    <a href="{{ path('editorial_delete', {'id': editorial.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}
