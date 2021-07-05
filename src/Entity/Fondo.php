@@ -149,6 +149,13 @@ class Fondo
         return $this;
     }
 
+    public function removeAllAutores(): self
+    {
+        $this->autores = new ArrayCollection();
+
+        return $this;
+    }
+
     public function getEditorial(): ?Editorial
     {
         return $this->editorial;

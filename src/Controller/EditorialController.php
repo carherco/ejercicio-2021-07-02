@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Editorial;
-use App\Form\EditorialType;
 use App\Repository\EditorialRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +50,7 @@ class EditorialController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="editorial_show", methods={"GET"})
+     * @Route("/{id}", name="editorial_show")
      */ 
     public function show($id, EditorialRepository $editorialRepository): Response
     {
@@ -62,7 +61,7 @@ class EditorialController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="editorial_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="editorial_edit")
      */ 
     public function edit($id, EditorialRepository $editorialRepository): Response
     {

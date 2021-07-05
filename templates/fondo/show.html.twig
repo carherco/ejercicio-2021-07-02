@@ -20,6 +20,20 @@
                 <td>{{ fondo.isbn }}</td>
             </tr>
             <tr>
+                <th>Autores</th>
+                <td>
+                    {% for autor in fondo.autores %} 
+                        <p>{{ autor.nombre }} ( {{ autor.tipo}} ) </p>
+                    {% else %} 
+                        <div>Anónimo / Desconocido</div>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Editorial</th>
+                <td>{{ fondo.editorial.nombre }}</td>
+            </tr>
+            <tr>
                 <th>Edicion</th>
                 <td>{{ fondo.edicion }}</td>
             </tr>

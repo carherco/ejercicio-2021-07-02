@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Autor;
-use App\Form\AutorType;
 use App\Repository\AutorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +50,7 @@ class AutorController extends AbstractController
     }
 
     /** 
-     * @Route("/autor/{id}", name="autor_show", methods={"GET"})
+     * @Route("/autor/{id}", name="autor_show")
      */ 
     public function show($id, AutorRepository $autorRepository): Response
     {
@@ -62,7 +61,7 @@ class AutorController extends AbstractController
     }
 
     /** 
-     * @Route("/autor/{id}/edit", name="autor_edit", methods={"GET", "POST"})
+     * @Route("/autor/{id}/edit", name="autor_edit")
      */
     public function edit(
         $id,

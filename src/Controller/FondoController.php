@@ -63,7 +63,8 @@ class FondoController extends AbstractController
         $editorial = $editorialRepository->find($datosForm['editorialId']);
         $fondo->setEditorial($editorial);
 
-        foreach($datosForm['autoresIds'] as $autorId) {
+        $autoresIds = (array)$datosForm['autoresIds'];
+        foreach($autoresIds as $autorId) {
             $autor = $autorRepository->find($autorId);
             $fondo->addAutor($autor);
         }
@@ -128,7 +129,9 @@ class FondoController extends AbstractController
         $editorial = $editorialRepository->find($datosForm['editorialId']);
         $fondo->setEditorial($editorial);
 
-        foreach($datosForm['autoresIds'] as $autorId) {
+        $autoresIds = (array)$datosForm['autoresIds'];
+        $fondo->removeAllAutores();
+        foreach($autoresIds as $autorId) {
             $autor = $autorRepository->find($autorId);
             $fondo->addAutor($autor);
         }
